@@ -1,5 +1,4 @@
 
-%change some text
 
 \documentclass[conf]{new-aiaa}
 %\documentclass[journal]{new-aiaa} for journal papers
@@ -10,6 +9,8 @@
 \usepackage[version=4]{mhchem}
 \usepackage{siunitx}
 \usepackage{longtable,tabularx}
+\usepackage{listings}
+\usepackage{float}
 \setlength\LTleft{0pt} 
 
 \title{First Draft: Circumnavigation and obstacle avoidance guidance for UAV monitoring a ground target using Vector Fields}
@@ -25,24 +26,12 @@
 Circumnavigation of a moving ground target using a UAV requires guidance to maintain a standoff distance. Fixed wing aircraft are unable to directly follow over a ground target and must turn to maintain flight. Vector Field (VF) guidance was investigated as a circumnavigation method that would converge, circulate, and track a moving target using a constant radius circle with the target as a center. Parameters of the VF were explored to understand performance and capabilities of the field. In addition, obstacles may be present and can be represented by a VF that pushes away to achieve avoidance. The VF guidance circumnavigation and obstacle avoidance was simulated using a UAV Dubins vehicle that followed a target with an unknown path.
 \end{abstract}
 
-\section{Nomenclature}
+\section{Nomenclature - SECTION NEEDS TO BE COMPLETED OR OMITTED}
 
 {\renewcommand\arraystretch{1.0}
 \noindent\begin{longtable*}{@{}l @{\quad=\quad} l@{}}
 $A$  & amplitude of oscillation \\
-$a$ &    cylinder diameter \\
-$C_p$& pressure coefficient \\
-$Cx$ & force coefficient in the \textit{x} direction \\
-$Cy$ & force coefficient in the \textit{y} direction \\
-c   & chord \\
-d$t$ & time step \\
-$Fx$ & $X$ component of the resultant pressure force acting on the vehicle \\
-$Fy$ & $Y$ component of the resultant pressure force acting on the vehicle \\
-$f, g$   & generic functions \\
-$h$  & height \\
-$i$  & time index during navigation \\
-$j$  & waypoint index \\
-$K$  & trailing-edge (TE) nondimensional angular deflection rate
+
 \end{longtable*}}
 
 \section{Introduction}
@@ -139,74 +128,110 @@ Application of the GVF for circumnavigation of a moving target will require a cy
 \end{equation}
 
 
-
-
-
-
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Circ}
 	\caption{GVF Circulation Field around Circle}
 	\label{fig:circ}
 \end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Circnorm}
+	\caption{GVF Circulation Field around Circle Normalized Vectors}
+	\label{fig:circn}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Conv}
+	\caption{GVF Convergence Field around Circle}
+	\label{fig:Conv}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Convnorm}
+	\caption{GVF Convergence Field around Circle Normalized Vectors}
+	\label{fig:Convn}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{TV}
+	\caption{GVF Time Varying Field around Circle}
+	\label{fig:TV}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{TVnorm}
+	\caption{GVF Time Varying Field around Circle Normalized Vectors}
+	\label{fig:TVn}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{All}
+	\caption{Total Vector Field}
+	\label{fig:all}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Allnorm}
+	\caption{Total Vector Field Normalized Vectors}
+	\label{fig:alln1}
+\end{figure}
+
+\section{VF Guidance Performance}
+Simulation of a Dubin's vehicle as previously described using the GVF and Lyapunov VF was performed to compare the found methods of circumnavigating a moving target. Three methods simulated were the GVF using summing and normalized vectors and then the Lyapunov circle vector field. All three of the vector fields provided enough guidance to the Dubin's vehicle using only the heading angle to circumnavigate a moving target. The differences in performance are the convergence time, circular tracking error, and stability. Simulations of a moving target that changes direction three times at a constant speed (1) with a circumnavigation radius of 1, a Dubin's vehicle at constant speed (5) and turn radius (20 deg/sec) with GVF parameters of (G=H=L=1) was performed. The VF component summing method (Equation \ref{eq:vfcomponent}) converges upon the circle the quickest and has the smallest tracking error, but contains twitching or chattering while following the circle. The VF normalization (Equation \ref{eq:vfcomponentmod}) has similar convergence time to the summing and does not track as well, but has a much larger oscillation error from the circle without any twitching. Finally, the Lyapunov VF provided the slowest response and highest tracking error with about the same oscillation or deviation from the circle while tracking. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.5in]{moving3uavresult.eps}
+	\caption{Total Vector Field Normalized}
+	\label{fig:alln2}
+\end{figure}
+The steady state tracking error once the target has stopped moving shows a tracking error of high twitching with the summing, smooth constant small error with the GVF normalization, and higher error with the Lyapunov VF. The tracking performance error, defined as the distance from the circulation or radius point of the moving target, is shown in Figure \ref{fig:move_error}. Overall, the UAV controller would need to decide between (or switch) the smooth guidance of normalization or the tracking performance of the summing GVF. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{moving3uaverror.eps}
+	\caption{Total Vector Field Normalized}
+	\label{fig:move_error}
+\end{figure}
+
+\subsection{Obstacle Avoidance}
+Obstacle avoidance can be achieved by using only the inverted convergence vector with an activation function. The inverted convergence, with a minimal radius circle, will always push away from the center point. The radius must be much smaller than the actual obstacle because the field direction reverses once the radius threshold has been crossed. An activation function was used to express the radius of the obstacle and to reduce the avoidance contribution of a circular obstacle of radius, $R$, as the distance from the center, $d$, decreases (Equation \ref{eq:tanh} and is show in Figure \ref{fig:2avoid}). The final convergence vector (Equation \ref{eq:vftotal}) is combined with the 'G' factor to add additional vectoring magnitude, the activation function, and typical convergence vector calculation as before. The GVF does not account for distance from the path to increase or decrease aspects of guidance, although Gon\c{c}alves did propose varying G and H proportionally to distance and performance parameters to emphasize parts of the GVF as an object moves through the field. Placement of the obstacle is performed by selection an $x$ and $y$ coordinate and a radius. The vector calculated from the obstacle is added to the guidance vector and any other obstacle vectors to produce a final guidance vector. No guarantee is provided that the UAV will not violate the obstacle's radius, but several simulations have shows that a UAV on direct course for the obstacle was successfully diverted as shown in Figure \ref{fig:2avoid}. The simulated UAV was following a moving target at a radius of 1, internal obstacle radius of (0.01), P radius of 1, a 2:1 velocity ratio, G=H=L=1 and managed to avoid each obstacle.
 
 
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.7\linewidth]{Circnorm}
-%	\caption{GVF Circulation Field around Circle Normalized Vectors}
-%	\label{fig:circn}
-%\end{figure}
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.7\linewidth]{Conv}
-%	\caption{GVF Convergence Field around Circle}
-%	\label{fig:Conv}
-%\end{figure}
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.7\linewidth]{Convnorm}
-%	\caption{GVF Convergence Field around Circle Normalized Vectors}
-%	\label{fig:Convn}
-%\end{figure}
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.7\linewidth]{TV}
-%	\caption{GVF Time Varying Field around Circle}
-%	\label{fig:TV}
-%\end{figure}
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.7\linewidth]{TVnorm}
-%	\caption{GVF Time Varying Field around Circle Normalized Vectors}
-%	\label{fig:TVn}
-%\end{figure}
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.7\linewidth]{All}
-%	\caption{Total Vector Field}
-%	\label{fig:all}
-%\end{figure}
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.7\linewidth]{Allnorm}
-%	\caption{Total Vector Field Normalized Vectors}
-%	\label{fig:alln}
-%\end{figure}
+\begin{equation} \label{eq:tanh}
+P = R\frac{\tanh \left( 2 \pi d - \pi \right)+1}{2}
+\end{equation}
 
+\begin{equation} \label{eq:vfavoid}
+\overrightarrow{A} = -G  \lVert \overrightarrow{V}_{conv} \rVert P
+\end{equation}
+\begin{equation} \label{eq:vftotal}
+\overrightarrow{V}_{total} = \overrightarrow{V} + \sum_{i=1}^{n-1} \overrightarrow{A}_i
+\end{equation}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{tanh}
+	\caption{Activation Function}
+	\label{fig:tanh}
+\end{figure}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{avoid}
+	\caption{Obstacle Vector Field Example}
+	\label{fig:avoid}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.5in]{avoid_color_legend}
+	\caption{Obstacle Vector Field UAV Example}
+	\label{fig:2avoid}
+\end{figure}
 
 \section{Conclusion}
-A conclusion section is not required, though it is preferred. Although a conclusion may review the main points of the paper, do not replicate the abstract as the conclusion. A conclusion might elaborate on the importance of the work or suggest applications and extensions. \textit{Note that the conclusion section is the last section of the paper that should be numbered. The appendix (if present), acknowledgment, and references should be listed without numbers.}
 
+Vector field guidance of a UAV has several benefits over traditional guidance law methods. The advantages include simplicity of calculations, no time history required, and finally the ability to include obstacle avoidance. Research was performed into which type of VF to use for UAV guidance, parameters of the VF, and an obstacle avoidance method was developed. The target following performance of circumnavigation was tested using a Dubins path follower with outstanding performance. Obstacle avoidance was included by utilizing an inverse convergence field with an activation function to drive away vehicles. The investigated VF guidance for loitering or circumnavigation a moving target and avoiding obstacles that may exist on the ground or air was successfully achieved in simulation.
 
-\section*{Appendix}
-
-An Appendix, if needed, should appear before the acknowledgments.
-
-\section*{Acknowledgments}
-An Acknowledgments section, if used, \textbf{immediately precedes} the References. Sponsorship and financial support acknowledgments should be included here. The preferred spelling of the word ``acknowledgment'' in American English is without the ``e'' after the ``g.'' Avoid expressions such as ``One of us (S.B.A.) would like to thank\ldots'' Instead, write ``F.~A.~Author thanks\ldots'' Sponsor and financial support acknowledgments are also to be listed in the ``acknowledgments'' section.
-
-\bibliography{sample}
+\bibliography{VF}
 
 \end{document}

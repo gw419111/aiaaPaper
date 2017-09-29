@@ -1,4 +1,4 @@
-\begin{thebibliography}{0}
+\begin{thebibliography}{12}
 \newcommand{\enquote}[1]{``#1''}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
@@ -7,5 +7,92 @@
   \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
   \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
   \urlstyle{rm}\Url}\fi
+
+\bibitem[{Goerzen et~al.(2010)Goerzen, Kong, and Mettler}]{goerzen2010survey}
+Goerzen, C., Kong, Z., and Mettler, B., \enquote{A {Survey} of {Motion}
+  {Planning} {Algorithms} from the {Perspective} of {Autonomous} {UAV}
+  {Guidance},} \emph{Journal of Intelligent and Robotic Systems}, Vol.~57, No.
+  1-4, 2010, pp. 65--100.
+\newblock \doi{10.1007/s10846-009-9383-1},
+  \urlprefix\url{http://link.springer.com/10.1007/s10846-009-9383-1}.
+
+\bibitem[{Koren and Borenstein(1991)}]{koren1991potential}
+Koren, Y., and Borenstein, J., \enquote{Potential Field Methods and their
+  Inherent Limitations for Mobile Robot Navigation,} \emph{Proceedings of the
+  IEEE Conference on Robotics and Automation}, IEEE, 1991, pp. 1398--1404.
+
+\bibitem[{Oliveira et~al.(2016)Oliveira, Aguiar, and
+  Encarna{\c{c}}{\~a}o}]{oliveira2016moving}
+Oliveira, T., Aguiar, A.~P., and Encarna{\c{c}}{\~a}o, P., \enquote{Moving path
+  following for unmanned aerial vehicles with applications to single and
+  multiple target tracking problems,} \emph{IEEE Transactions on Robotics},
+  Vol.~32, No.~5, 2016, pp. 1062--1078.
+
+\bibitem[{Kaminer et~al.(1998)Kaminer, Pascoal, Hallberg, and
+  Silvestre}]{kaminer1998trajectory}
+Kaminer, I., Pascoal, A., Hallberg, E., and Silvestre, C., \enquote{Trajectory
+  tracking for autonomous vehicles: An integrated approach to guidance and
+  control,} \emph{Journal of Guidance, Control, and Dynamics}, Vol.~21, No.~1,
+  1998, pp. 29--38.
+
+\bibitem[{Chen et~al.(2009)Chen, Chang, and Agate}]{chen2009tracking}
+Chen, H., Chang, K., and Agate, C.~S., \enquote{Tracking with UAV using
+  tangent-plus-Lyapunov vector field guidance,} \emph{Information Fusion, 2009.
+  FUSION'09. 12th International Conference on}, IEEE, 2009, pp. 363--372.
+
+\bibitem[{Frew and Lawrence(2012)}]{frew_tracking_2012}
+Frew, E.~W., and Lawrence, D., \enquote{Tracking expanding star curves using
+  guidance vector fields,} \emph{American {Control} {Conference} ({ACC}),
+  2012}, IEEE, 2012, pp. 1749--1754.
+\newblock
+  \urlprefix\url{http://ieeexplore.ieee.org/abstract/document/6315473/}.
+
+\bibitem[{Gon\c{c}alves et~al.(2010{\natexlab{a}})Gon\c{c}alves, Pimenta, Maia,
+  Pereira, Dutra, Michael, Fink, and Kumar}]{goncalves_circulation_2010}
+Gon\c{c}alves, V.~M., Pimenta, L.~C., Maia, C.~A., Pereira, G.~A., Dutra,
+  B.~C., Michael, N., Fink, J., and Kumar, V., \enquote{Circulation of curves
+  using vector fields: actual robot experiments in 2D and 3D workspaces,}
+  \emph{Robotics and {Automation} ({ICRA}), 2010 {IEEE} {International}
+  {Conference} on}, IEEE, 2010{\natexlab{a}}, pp. 1136--1141.
+\newblock
+  \urlprefix\url{http://ieeexplore.ieee.org/abstract/document/5509581/}.
+
+\bibitem[{Rosier(1992)}]{rosier1992homogeneous}
+Rosier, L., \enquote{Homogeneous Lyapunov function for homogeneous continuous
+  vector field,} \emph{Systems \& Control Letters}, Vol.~19, No.~6, 1992, pp.
+  467--473.
+
+\bibitem[{Chen et~al.(2013)Chen, Chang, and Agate}]{chen2013uav}
+Chen, H., Chang, K., and Agate, C.~S., \enquote{UAV path planning with
+  tangent-plus-Lyapunov vector field guidance and obstacle avoidance,}
+  \emph{IEEE Transactions on Aerospace and Electronic Systems}, Vol.~49, No.~2,
+  2013, pp. 840--856.
+
+\bibitem[{Gon\c{c}alves et~al.(2009)Gon\c{c}alves, Pimenta, Maia, and
+  Pereira}]{goncalves_artificial_2009}
+Gon\c{c}alves, V.~M., Pimenta, L.~C., Maia, C.~A., and Pereira, G.~A.,
+  \enquote{Artificial vector fields for robot convergence and circulation of
+  time-varying curves in n-dimensional spaces,} \emph{American {Control}
+  {Conference}, 2009. {ACC}'09.}, IEEE, 2009, pp. 2012--2017.
+\newblock
+  \urlprefix\url{http://ieeexplore.ieee.org/abstract/document/5160350/}.
+
+\bibitem[{Gon\c{c}alves et~al.(2010{\natexlab{b}})Gon\c{c}alves, Pimenta, Maia,
+  Dutra, and Pereira}]{goncalves_vector_2010}
+Gon\c{c}alves, V.~M., Pimenta, L.~C., Maia, C.~A., Dutra, B.~C., and Pereira,
+  G.~A., \enquote{Vector fields for robot navigation along time-varying curves
+  in \$ n \$-dimensions,} \emph{IEEE Transactions on Robotics}, Vol.~26, No.~4,
+  2010{\natexlab{b}}, pp. 647--659.
+\newblock
+  \urlprefix\url{http://ieeexplore.ieee.org/abstract/document/5504176/}.
+
+\bibitem[{Gon\c{c}alves et~al.(2013)Gon\c{c}alves, Pimenta, Maia, and
+  Pereira}]{goncalves_coordination_2013}
+Gon\c{c}alves, V.~M., Pimenta, L.~C., Maia, C.~A., and Pereira, G.~A.,
+  \enquote{Coordination of multiple fixed-wing {UAVs} traversing intersecting
+  periodic paths,} \emph{Robotics and {Automation} ({ICRA}), 2013 {IEEE}
+  {International} {Conference} on}, IEEE, 2013, pp. 849--854.
+\newblock
+  \urlprefix\url{http://ieeexplore.ieee.org/abstract/document/6630672/}.
 
 \end{thebibliography}
