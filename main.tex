@@ -11,12 +11,16 @@
 \usepackage{longtable,tabularx}
 \usepackage{listings}
 \usepackage{float}
+\usepackage{subcaption}
 \setlength\LTleft{0pt} 
 
 \title{First Draft: Circumnavigation and obstacle avoidance guidance for UAV monitoring a ground target using Vector Fields}
 
-\author{Jay P. Wilhelm\footnote{Assistant Professor, Department of Mechanical Engineering, 251 Stocker Center, AIAA Senior Member.} and Second B. Author Jr.\footnote{Insert Job Title, Department Name, Address/Mail Stop, and AIAA Member Grade (if any) for second author.}}
+\author{Jay P. Wilhelm\footnote{Assistant Professor, Department of Mechanical Engineering, 251 Stocker Center, AIAA Senior Member.}, Gregory J. Wambold\footnote{Graduate Research Assistant, Department of Mechanical Engineering, 251 Stocker Center.} and Garrett S. Clem\footnote{Graduate Research Assistant, Department of Mechanical Engineering, 251 Stocker Center}}
 \affil{Ohio University, Athens, OH, 45701}
+
+\author{AFRL D. Author\footnote{Insert Job Title, Department Name, Address/Mail Stop, and AIAA Member Grade (if any) for fourth author.}}
+\affil{Business or Academic Affiliation 2, City, Province, Zip Code, Country}
 
 \begin{document}
 
@@ -40,12 +44,50 @@ $A$  & amplitude of oscillation \\
 \section{Literature Review}
 Guidance for a UAV that is moving faster than another target, assumed in this case to be a ground vehicle, may be achieved using several different methods. Three recurring types of guidance seen for UAVs include Potential Fields, classical optimal laws, and Vector Fields (VF). Various methods are used to generate Potential Fields, where obstacles are characterized by areas of high potential and the area of lowest potential contains the goal or end point {\cite{goerzen2010survey}}. The UAV is guided from an initial position in the field, following a path of descending potential, until it reaches the area of lowest potential {\cite{goerzen2010survey}}. While potential field methods may be utilized for some guidance scenarios, they have inherent limitations {\cite{koren1991potential}} and are not a feasible method for circumnavigation of a target. Classical control laws were developed {\cite{oliveira2016moving,kaminer1998trajectory}}, are typically non-linear, and require direct control over a vehicle's heading. Vector Field methods and control laws found in literature assume constant UAV velocity {\cite{chen2009tracking}}, which is controlled using a separate system. Classical control laws were found to be complicated in terms of required calculations, and are unsuitable in this case due to their inability to circumnavigate a target. VF methods were investigated further due to their ability to provide circumnavigation of a moving and non-moving target. The VFs come in several different forms where the initial and final concept of generating the field are fundamentally different. The two primary methods considered in the generation of VFs for guidance are Lyapunov {\cite{frew_tracking_2012}} and Gon\c{c}alves {\cite{goncalves_circulation_2010}} or Gradient Vector Fields (GVF), which generate fields using completely different fundamental mechanisms. Lyapunov and GVF both appear to generate similar VFs for basic shapes (ex, circle), and are undefined at the origin (x=0,y=0). The GVF has additional features that allow for time-varying scenarios, where the surfaces move with respect to time, and the ability to support more advanced surfaces than Lyapunov.
 
-\section{The Lyapunov Vector Field}
-Lyapunov VFs can be generated given a Lyapunov function as defined in Frew {\cite{frew_tracking_2012}}. The exact method of transforming a Lyapunov function into a VF equation can be found {\cite{rosier1992homogeneous,chen2013uav,chen2009tracking}}. Circular VF guidance, or circumnavigation, using a Lyapunov equation can be achieved from Equation \ref{eq:lyapunovvf} where $v$ is the desired UAV velocity, $r$ is the UAV distance from the center of the field, $r_d$ is the desired circle radius, and $x$ and $y$ are the UAV positions. The Lyapunov VF can be built from a variety of continuous shapes and may include a constant wind field by summing an additional vector.
+\subsection{The Lyapunov Vector Field}
+%Lyapunov VFs can be generated given a Lyapunov function as defined in Frew {\cite{frew_tracking_2012}}. The exact method of transforming a Lyapunov function into a VF equation can be found %{\cite{rosier1992homogeneous,chen2013uav,chen2009tracking}}. Circular VF guidance, or circumnavigation, using a Lyapunov equation can be achieved from Equation \ref{eq:lyapunovvf} where $v$ is the desired UAV velocity, %$r$ is the UAV distance from the center of the field, $r_d$ is the desired circle radius, and $x$ and $y$ are the UAV positions. The Lyapunov VF can be built from a variety of continuous shapes and may include a constant %wind field by summing an additional vector. (CHANGE WORDING IN THIS SECTION) Given the Lyapunov function:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{equation}\label{eq:lyapunovvf}
-\overrightarrow{V}_{Lyapunov} = \frac{v}{r^2+r_d^2} \begin{bmatrix} -x (r^2-r_d^2) - y (2 r r_d^2) \\ -y (r^2-r_d^2) - x (2 r r_d^2)\end{bmatrix}
+Lyapunov VFs can be generated following the methodology defined in Frew {\cite{frew_coordinated_2008}}. (CHANGE WORDING IN THIS SECTION) Given the Lyapunov function:
+
+\begin{equation}\label{eq:lyapunovfunction}
+V(x,y) = (r^2 - r_d^2)^2
 \end{equation}
+where $r$ is given by the equation
+\begin{equation}
+r = \sqrt{x^2+y^2}
+\end{equation}
+and the total time derivative of Equation \ref{eq:lyapunovfunction} is
+\begin{equation}
+\dot{V}(x,y) = \nabla{V} \cdotp [\dot{x},\dot{y}]^{T}
+\end{equation}
+which can be made nonpositive by choosing the desired relative velocity $\dot{x}$ and $\dot{y}$ according to the guidance vector field
+\begin{equation}
+\overrightarrow{V}_{Lyapunov} = \begin{bmatrix} \dot{x_d} \\ \dot{y_d} \end{bmatrix} = \alpha \left(\frac{-v}{r}\right) \begin{bmatrix} x \frac{r^2-r_d^2}{r^2+r_d^2} + y \frac{2 r r_d}{r^2+r_d^2} \\ y \frac{r^2-r_d^2}{r^2+r_d^2} - x \frac{2 r r_d}{r^2+r_d^2} \end{bmatrix}
+\end{equation}
+Assuming $\alpha$=1 and $r$=1, the final Lyapunov VF equation is generated:
+\begin{equation}\label{eq:lyapunovvf}
+\overrightarrow{V}_{Lyapunov} = \frac{v}{r^2+r_d^2} \begin{bmatrix} - x (r^2-r_d^2) - y (2 r r_d) \\ - y (r^2-r_d^2) + x (2 r r_d) \end{bmatrix}
+\end{equation}
+
+Circular VF guidance, or circumnavigation, using a Lyapunov equation can be achieved from Equation \ref{eq:lyapunovvf} where $v$ is the desired UAV velocity, $r$ is the UAV distance to the target, $r_d$ is the desired radius of the standoff circle, and $x$ and $y$ are the UAV positions. The Lyapunov VF can be built from a variety of continuous shapes and may include a constant wind field by summing an additional vector.
+ 
+%\begin{equation}
+%\overrightarrow{V}_{Lyapunov} = \begin{bmatrix} \dot{x_d} \\ \dot{y_d} \end{bmatrix} = -\lambda \begin{bmatrix} r^2-r_d^2 && -2 r r_d \\ 2 r r_d && r^2-r_d^2\end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix}
+%\end{equation}
+
+%\begin{equation}
+%\lambda = \frac{v}{r^2+r_d^2}
+%\end{equation}
+
+%\begin{equation}
+%\overrightarrow{V}_{Lyapunov} = \frac{v}{r^2+r_d^2} \begin{bmatrix} -x (r^2-r_d^2) + y (2 r r_d) \\ -y (r^2-r_d^2) - x (2 r r_d) \end{bmatrix}
+%\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{equation}\label{eq:lyapunovvf}
+%\overrightarrow{V}_{Lyapunov} = \frac{v}{r^2+r_d^2} \begin{bmatrix} -x (r^2-r_d^2) - y (2 r r_d^2) \\ -y (r^2-r_d^2) - x (2 r r_d^2)\end{bmatrix}
+%\end{equation}
 
 \section{The Gon\c{c}alves Vector Field}
 The GVF is fundamentally an interaction of two surfaces that produces a convergence and circulation path where the surfaces intersect {\cite{goncalves_circulation_2010,goncalves_artificial_2009,goncalves_vector_2010,goncalves_coordination_2013}}. The functions to express the surfaces ($\alpha_i:\mathbb{R}^n\rightarrow\mathbb{R} | i=1,...,n-1$) of ($n-1$) dimensions must be positive definite function that are always differentiable. Consider a space with the following dimensions:
@@ -127,54 +169,34 @@ Application of the GVF for circumnavigation of a moving target will require a cy
 \overrightarrow{V}_{tv} =  \frac{-2 v_x(x - x_c) - 2 v_y(y - y_c)}{(2(x-x_c))^2+(2(y-y_c))^2} \begin{bmatrix} 2 (x-x_c) \\ 2 (y-y_c) \\ 0 \end{bmatrix}
 \end{equation}
 
-
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{Circ}
-	\caption{GVF Circulation Field around Circle}
-	\label{fig:circ}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{Circnorm}
-	\caption{GVF Circulation Field around Circle Normalized Vectors}
-	\label{fig:circn}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{Conv}
-	\caption{GVF Convergence Field around Circle}
-	\label{fig:Conv}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{Convnorm}
-	\caption{GVF Convergence Field around Circle Normalized Vectors}
-	\label{fig:Convn}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{TV}
-	\caption{GVF Time Varying Field around Circle}
-	\label{fig:TV}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{TVnorm}
-	\caption{GVF Time Varying Field around Circle Normalized Vectors}
-	\label{fig:TVn}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{All}
-	\caption{Total Vector Field}
-	\label{fig:all}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{Allnorm}
-	\caption{Total Vector Field Normalized Vectors}
-	\label{fig:alln1}
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{Circ}
+		\caption{GVF Circulation Field with Normalized Vectors}
+		\label{fig:circ}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{Conv}
+		\caption{GVF Convergence Field with Normalized Vectors}
+		\label{fig:conv}
+	\end{subfigure}
+\par\bigskip 
+	\begin{subfigure}[t]{0.49\textwidth}
+		\includegraphics[width=\linewidth]{TV}
+		\caption{GVF Time Varying Field with Normalized Vectors}
+		\label{fig:tv}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.49\textwidth}
+		\includegraphics[width=\linewidth]{All}
+		\caption{Total Vector Field with Normalized Vectors}
+		\label{fig:all}
+	\end{subfigure}
+\caption{Normalized GVF Component and Total Vector Fields}
 \end{figure}
 
 \section{VF Guidance Performance}

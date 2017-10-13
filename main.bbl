@@ -1,4 +1,4 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{13}
 \newcommand{\enquote}[1]{``#1''}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
@@ -56,6 +56,14 @@ Gon\c{c}alves, V.~M., Pimenta, L.~C., Maia, C.~A., Pereira, G.~A., Dutra,
   {Conference} on}, IEEE, 2010{\natexlab{a}}, pp. 1136--1141.
 \newblock
   \urlprefix\url{http://ieeexplore.ieee.org/abstract/document/5509581/}.
+
+\bibitem[{Frew et~al.(2008)Frew, Lawrence, and Morris}]{frew_coordinated_2008}
+Frew, E.~W., Lawrence, D.~A., and Morris, S., \enquote{Coordinated Standoff
+  Tracking of Moving Targets Using Lyapunov Guidance Vector Fields,}
+  \emph{Journal of Guidance, Control, and Dynamics}, Vol.~31, No.~2, 2008, pp.
+  290--306.
+\newblock \doi{10.2514/1.30507},
+  \urlprefix\url{http://arc.aiaa.org/doi/10.2514/1.30507}.
 
 \bibitem[{Rosier(1992)}]{rosier1992homogeneous}
 Rosier, L., \enquote{Homogeneous Lyapunov function for homogeneous continuous
